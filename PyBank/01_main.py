@@ -20,25 +20,17 @@
 import os
 import csv
 
-
-# First I want to find it's path using the way Mahesh demo'd
-folder_path = r'C:\Users\nbart.DESKTOP-3OF7M8N\Desktop\Data Analysis Class Materials\class_assignments\python-challenge\PyBank\Resources'
-
-# change the current directory to the working path
-os.chdir(folder_path)
-
 # get the current working directory
 path = os.getcwd()
 
 # now create the path again for some reason, truncated perhaps more efficient?
-file_path = os.path.join(path, 'budget_data.csv')
+file_path = os.path.join('..', 'Resources', 'budget_data.csv')
 
 # Make sure total_sum starts at 0
 total_sum = 0
-profit_losses = []
 
 # A with statement to read the file path and save in variable as an object
-with open(file_path, newline='') as budget_object:
+with open(file_path) as budget_object:
 
     # Read the file and separate it
     csvreader = csv.reader(budget_object, delimiter=',')
@@ -48,16 +40,8 @@ with open(file_path, newline='') as budget_object:
 
     # Convert csvreader into a list and save to a new variable
     csv_data = list(csvreader)
-
-    # Find the number of months with the len function (this will determine the number of rows)
-    csv_months = len(csv_data)
-
-    print(csv_months)
-
-    # The net total amount of "Profit/Losses" over the entire period
-    # This requires a sum on column 1
    
-    for row in csvreader:
+    for row in csv_data:
 
         total_sum += int(row[1])
     
