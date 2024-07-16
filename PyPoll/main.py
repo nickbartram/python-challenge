@@ -1,80 +1,118 @@
+# Import os and csv modules to help with getting the file path
 import os
 import csv
 
-# Set the file path
-# Going to need to be able to do this with a relative path but,
-# Stuck so for now let's do the rest of it with this
-folder_path = r"C:\Users\nbart.DESKTOP-3OF7M8N\Desktop\Data Analysis Class Materials\class_assignments\python-challenge\PyPoll\Resources"
+# Get the full path of the current directory and save it to a variable
+current_dir = os.getcwd()
 
-# change current folder to folder path
-os.chdir(folder_path)
+# Join the path together to form a full path to the .csv file
+csvpath = os.path.join(current_dir, 'PyPoll', 'Resources', 'election_data.csv')
 
-# confirm the folder
-path = os.getcwd()
-
-file_path = os.path.join(path, 'election_data.csv')
-
-# total votes, candidates votes, unique candidates
-
+# Create a total_votes counter and start at zero
 total_votes = 0
-candidate_votes = {}
-name = []
 
+# Create a candidates_votes dictionary
+nominee_votes_dict = {}
 
+# Create a name list
+names = []
 
-
+# Print the title of the results that will display in terminal
 print("Election Results")
 print("-------------------------------------------------------------")
 
-# Open the file at the specified path
-with open(file_path) as election_file:
+# Open the .csv file and save it to a variable
+with open(csvpath) as election_file:
     
-    # Create csvreader variable, including the file seperated by a comma
+    # Create csvreader variable, including the .csv file seperated by a comma
     csvreader = csv.reader(election_file, delimiter=',')
 
-    # Isolate the header
-    next(csvreader)
+    # Find and save the header
+    header = next(csvreader)
 
-    # Make sure python knows this is a list
+    # Make sure python knows that csvreader is a list
     csvlist = list(csvreader)
 
     #Start a for loop to find all the candidates, this percentage of votes and total votes
     for row in csvlist:
 
+        # +1 to the total_votes tally
         total_votes += 1
 
-        candidate = row[2]
+        # Save the the name of the nominee (value in column 2)
+        nominee = row[2]
 
-        if candidate not in name:
+        # If candidate is not already in the name list then...
+        if nominee not in names:
 
-            name.append(candidate)
+            #... add nominee to the name list
+            names.append(nominee)
         
          # Count the votes for each candidate
-        if candidate in candidate_votes:
-            candidate_votes[candidate] += 1
+         # If the nominee is already in the nominee_votes_dict dictionay then...
+        if nominee in nominee_votes_dict:
+            
+            #... +1 to the nominee votes
+            nominee_votes_dict[nominee] += 1
+
+        # Otherwise set the votes to 1 because this is the first time
         else:
-            candidate_votes[candidate] = 1
+            nominee_votes_dict[nominee] = 1
       
-# Found items() method on Xpert Learning Assistant (henceforth: XLA)      
-# for candidate, votes in candidate_votes.items():
-    # print(f"{candidate}: {votes} votes")
 
-for candidate in candidate_votes:
+# Print total votes to the terminal
+print(f"Total votes: {total_votes}")
+print("--------------------------------------------------------------")
+
+# Use the candidate name to look through the candidate_votes dictionary
+for nominee in nominee_votes_dict:
         
-        votes = candidate_votes[candidate]
+        # Save the number of votes the candidate received toa variable
+        votes = nominee_votes_dict[nominee]
 
+        # Divide the candidates votes by the total votes and multiply by 100,
+        # Save this percentage to a variable
         percentage = (votes / total_votes) * 100
 
+        # Round the percentage to 2 decimal points and save to variable
         round_percentage = round(percentage, 2)
 
-        print(f"{candidate}: {round_percentage}% ({votes})")
+        # Print the candidate's name, their percentage of votes and total votes
+        print(f"{nominee}: {round_percentage}% ({votes})")
 
+# Print a dividing line
 print("----------------------------------------------------------------")
 
-winner = max(candidate_votes, key=candidate_votes.get)
+# Find the winner
+# Got help from stackoverflow to find this method
+# Use the max() method, with a specified key, to get that key's value
+winner = max(nominee_votes_dict, key=nominee_votes_dict.get)
 
+# Print the winner
 print(f"Winner: {winner}")
 
-
+# Print a dividing line
 print("----------------------------------------------------------------")
 
+# Open a new text file to write in, save it as a variable 'results'
+with open('election_results.txt', 'w') as results:
+
+    # Write the title and start new line in the text file
+    results.write("Election Results\n")
+    results.write("-------------------------------------------------------\n")
+
+    # Write the total votes and start new line
+    results.write(f"Total votes: {total_votes}\n")
+    results.write("-------------------------------------------------------\n")
+
+    # Create a list comprehension
+    # For every nominee in the nominee_votes_dict dictionary...
+    for nominee in nominee_votes_dict:
+
+        # Write thier name, vote percentage, total votes, and start a new line
+        results.write(f"{nominee}: {round_percentage}% ({votes})\n")
+    results.write("-------------------------------------------------------\n")
+
+    # Write the winner and start new line
+    results.write(f"Winner: {winner}\n")
+    results.write("-------------------------------------------------------\n")

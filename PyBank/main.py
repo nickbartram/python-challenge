@@ -2,93 +2,98 @@
 import os
 import csv
 
-# Set the file path
-folder_path = r"C:\Users\nbart.DESKTOP-3OF7M8N\Desktop\Data Analysis Class Materials\class_assignments\python-challenge\PyBank\Resources"
+# Get os to find the current directory
+# Required Xpert Learning Assistant (henceforth XLA) help to discover this line of code
+current_dir = os.getcwd()
 
-# Change current folder to folder path
-os.chdir(folder_path)
-
-# confirm the folder
-path = os.getcwd()
-
-file_path = os.path.join(path, 'budget_data.csv')
-
-print("budget.csv is found at: ", file_path)
-
-# Verify the folder
-# print("Current folder: ", current_folder)
+# Create a relative path to the .csv file
+csvpath = os.path.join(current_dir, 'PyBank','Resources', 'budget_data.csv')
 
 # Create months and sums counters
 total_months = 0
 total_sum = 0
 
-# Create profit/loss and date list
+# Create profit/loss and date lists
 profit_loss = []
 date = []
 
+# Open the .csv file as a new variable 'budget file'
+with open(csvpath) as budget_file:
 
-with open(file_path) as budget_file:
-
-    #get csv module to read and seperate elements of the file
+    # Use csv module to read and seperate elements of the file
     csvreader = csv.reader(budget_file, delimiter=',')
 
-    # Access and remove header from table
-    next(csvreader)
+    # Find and save the header
+    header = next(csvreader)
 
-    # Convert csvreader into a list
+    # Convert csvreader into a list, troubleshooted online and XLA
     csv_list = list(csvreader)
 
-    # Count rows, sums up their totals, and, for every row... 
+    # Loop through every row of the csv_list
     for row in csv_list:
 
-        # Add sum to total_sum
+        # Add its column 1 value ('Profit/Losses') to the total_sum counter
         total_sum += int(row[1])
 
-        # Add 1 to months counter
+        # +1 to total months counter
         total_months += 1
 
-        # Add to profit_loss list
+        # Save the value in column 1 ("Profit/Losses") to a list: 'profit_loss' 
         profit_loss.append(int(row[1]))
 
-        # Add to date list
+        # Save the value in column 0 ("Date") to a list: 'date'
         date.append(row[0])
     
-# Calculate the changes in Profit/Loss
-changes = [profit_loss[i+1] - profit_loss[i] for i in range(len(profit_loss)-1)]
+# Save changes in Profit/Losses between every two rows in a variable:
+# Subtract this rows profit_loss value from the next one's,
+# Do it for every row except the last, to avoid comparing to a blank space
+changes_profit_loss = [profit_loss[i+1] - profit_loss[i] for i in range(len(profit_loss)-1)]
 
-# Calculate the average change
-average_change = sum(changes) / len(changes)
+# Get the average change by dividing the sum of all the changes, by the number of them
+average_change = sum(changes_profit_loss) / len(changes_profit_loss)
 
 # Round the average to 2 decimal places
 round_average_change = round(average_change, 2)
 
-# Find the greatest increase and decrease in profits
-max_increase = max(changes)
-max_decrease = min(changes)
+# Save to a variable the greatest increase and decrease in 'Profit/Losses'
+# Find the maximum and minimum values of changes_profit_loss
+max_increase = max(changes_profit_loss)
+max_decrease = min(changes_profit_loss)
 
 # Find the date of the change by adding 1 to the max_increase
 # Add one because of logic of changes list comprehension
-max_increase_date = date[changes.index(max_increase) + 1]
-max_decrease_date = date[changes.index(max_decrease) + 1]
+max_date = date[changes_profit_loss.index(max_increase) + 1]
+min_date = date[changes_profit_loss.index(max_decrease) + 1]
 
-# Print the financial analysis results
+# Print the financial analysis results starting with the title
 print("Financial Analysis")
-print("----------------------------")
+
+# Print a dividing line
+print("--------------------------------------------------")
+
+# Print total months,sum, and average change
 print(f"Total Months: {total_months}")
 print(f"Total: ${total_sum}")
 print(f"Average Change: ${round_average_change}")
-print(f"Greatest Increase in Profits: {max_increase_date} (${max_increase})")
-print(f"Greatest Decrease in Profits: {max_decrease_date} (${max_decrease})")
+
+# Print greatest increase and decrease and their dates
+print(f"Greatest Increase in Profits: {max_date} (${max_increase})")
+print(f"Greatest Decrease in Profits: {min_date} (${max_decrease})")
 
 # Export results to a text file
-with open('financial_analysis.txt') as results:
+# Open a new file to write in and save it to 'results'
+with open('financial_analysis.txt', 'w') as results:
+
+    # Start writing, starting with the title and then moving to next line
     results.write(f"Financial Analysis\n")
     results.write("----------------------------------------------------------------\n")
+    
+    # Write total months, total, average change, greatest increase and decrease 
     results.write(f"Total Months: {total_months}\n")
     results.write(f"Total: {total_sum}\n")
-    results.write(f"Average Change: {round_average_change}")
-    results.write(f"Greatest Increase in Profits: {max_increase_date} (${max_increase})\n")
-    results.write(f"Greatest Decrease in Profits: {max_decrease_date} (${max_decrease})\n")
+    results.write(f"Average Change: {round_average_change}\n")
+    results.write(f"Greatest Increase in Profits: {max_date} (${max_increase})\n")
+    results.write(f"Greatest Decrease in Profits: {min_date} (${max_decrease})\n")
 
 
 
