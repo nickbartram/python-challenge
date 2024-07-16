@@ -3,10 +3,9 @@ import os
 import csv
 
 # Get os to find the current directory
-# Required Xpert Learning Assistant (henceforth XLA) help to discover this line of code
 current_dir = os.getcwd()
 
-# Create a relative path to the .csv file
+# Join the path to the .csv file
 csvpath = os.path.join(current_dir, 'PyBank','Resources', 'budget_data.csv')
 
 # Create months and sums counters
