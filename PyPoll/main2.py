@@ -12,7 +12,7 @@ csvpath = os.path.join(current_dir, 'PyPoll', 'Resources', 'election_data.csv')
 total_votes = 0
 
 # Create a candidates_votes dictionary
-candidate_votes_dict = {}
+candidates_tally = {}
 
 # Create a name list
 names = []
@@ -49,15 +49,15 @@ with open(csvpath) as election_file:
             names.append(candidate)
         
          # Count the votes for each candidate
-         # If the candidate is already in the candidate_votes_dict dictionay then...
-        if candidate in candidate_votes_dict:
+         # If the candidate is already in the candidates_tally dictionay then...
+        if candidate in candidates_tally:
             
             #... +1 to the candidate votes
-            candidate_votes_dict[candidate] += 1
+            candidates_tally[candidate] += 1
 
         # Otherwise set the votes to 1 because this is the first time
         else:
-            candidate_votes_dict[candidate] = 1
+            candidates_tally[candidate] = 1
       
 
 # Print total votes to the terminal
@@ -65,10 +65,10 @@ print(f"Total votes: {total_votes}")
 print("--------------------------------------------------------------")
 
 # Use the candidate name to look through the candidate_votes dictionary
-for candidate in candidate_votes_dict:
+for candidate in candidates_tally:
         
         # Save the number of votes the candidate received toa variable
-        votes = candidate_votes_dict[candidate]
+        votes = candidates_tally[candidate]
 
         # Divide the candidates votes by the total votes and multiply by 100,
         # Save this percentage to a variable
@@ -84,9 +84,9 @@ for candidate in candidate_votes_dict:
 print("----------------------------------------------------------------")
 
 # Find the winner
-# Got help from stackoverflow to find this method
+# Got help from stackoverflow (1) to find this method
 # Use the max() method, with a specified key, to get that key's value
-winner = max(candidate_votes_dict, key=candidate_votes_dict.get)
+winner = max(candidates_tally, key=candidates_tally.get)
 
 # Print the winner
 print(f"Winner: {winner}")
@@ -109,8 +109,8 @@ with open(election_results, 'w') as results:
     results.write("-------------------------------------------------------\n")
 
     # Create a list comprehension
-    # For every candidate in the candidate_votes_dict dictionary...
-    for candidate in candidate_votes_dict:
+    # For every candidate in the candidates_tally dictionary...
+    for candidate in candidates_tally:
 
         # Write thier name, vote percentage, total votes, and start a new line
         results.write(f"{candidate}: {round_percentage}% ({votes})\n")
