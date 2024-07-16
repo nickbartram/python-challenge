@@ -79,13 +79,16 @@ print(f"Average Change: ${round_average_change}")
 print(f"Greatest Increase in Profits: {max_date} (${max_increase})")
 print(f"Greatest Decrease in Profits: {min_date} (${max_decrease})")
 
+# Create a file in the analysis folder of PyBank
+fin_analysis = os.path.join(current_dir, 'PyBank', 'analysis', 'financial_analysis.txt')
+
 # Export results to a text file
 # Open a new file to write in and save it to 'results'
-with open('financial_analysis.txt', 'w') as results:
+with open(fin_analysis, 'w') as results:
 
     # Start writing, starting with the title and then moving to next line
     results.write(f"Financial Analysis\n")
-    results.write("----------------------------------------------------------------\n")
+    results.write("-------------------------------------------------\n")
     
     # Write total months, total, average change, greatest increase and decrease 
     results.write(f"Total Months: {total_months}\n")

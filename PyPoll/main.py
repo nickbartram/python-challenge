@@ -84,7 +84,7 @@ for candidate in candidates_tally:
 print("----------------------------------------------------------------")
 
 # Find the winner
-# Got help from stackoverflow to find this method
+# Got help from stackoverflow (1) to find this method
 # Use the max() method, with a specified key, to get that key's value
 winner = max(candidates_tally, key=candidates_tally.get)
 
@@ -94,8 +94,11 @@ print(f"Winner: {winner}")
 # Print a dividing line
 print("----------------------------------------------------------------")
 
+# Create a file in the analysis folder of PyPoll
+election_results = os.path.join(current_dir, 'PyPoll', 'analysis', 'election_results.txt')
+
 # Open a new text file to write in, save it as a variable 'results'
-with open('election_results.txt', 'w') as results:
+with open(election_results, 'w') as results:
 
     # Write the title and start new line in the text file
     results.write("Election Results\n")
@@ -109,8 +112,18 @@ with open('election_results.txt', 'w') as results:
     # For every candidate in the candidates_tally dictionary...
     for candidate in candidates_tally:
 
-        # Write thier name, vote percentage, total votes, and start a new line
+        # Create a new votes variable to keep tally in this loop
+        votes = candidates_tally[candidate]
+
+        # Divide the candidates votes by the total votes and multiply by 100,
+        # Save this percentage to a variable
+        percentage = (votes / total_votes) * 100
+
+        # Round the percentage to 2 decimal points and save to variable
+        round_percentage = round(percentage, 2)
+        # Write their name, vote percentage, total votes, and start a new line
         results.write(f"{candidate}: {round_percentage}% ({votes})\n")
+    
     results.write("-------------------------------------------------------\n")
 
     # Write the winner and start new line
