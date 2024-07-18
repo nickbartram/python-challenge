@@ -1,6 +1,8 @@
 ---------------------------------
 Module 3: Python Challenge README
 ---------------------------------
+python-challenge location: https://github.com/nickbartram/python-challenge.git
+
 python-challenge contents:
     - PyBank/PyPoll folders
     - PyBank/PyPoll sub-folders: analysis, Resources
@@ -16,7 +18,7 @@ python-challenge notes:
         - some code may closely resemble potential answers from XLA
 
 sources include:
- - Xpert Learning Assistant
-    - marked in comments of main.py files
- - stackoverflow:
-    (1) https://stackoverflow.com/questions/52205011/how-to-get-max-to-return-variable-names-instead-of-values-in-python
+    - Xpert Learning Assistant
+        - marked in comments of main.py files
+    - stackoverflow:
+        (1) https://stackoverflow.com/questions/52205011/how-to-get-max-to-return-variable-names-instead-of-values-in-python
