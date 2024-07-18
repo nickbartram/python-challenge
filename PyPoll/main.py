@@ -14,26 +14,26 @@ total_votes = 0
 # Create a candidates_votes dictionary
 candidates_tally = {}
 
-# Create a name list
+# Create a names list
 names = []
 
 # Print the title of the results that will display in terminal
 print("Election Results")
-print("-------------------------------------------------------------")
+print("------------------------------------------------------")
 
 # Open the .csv file and save it to a variable
 with open(csvpath) as election_file:
     
-    # Create csvreader variable, including the .csv file seperated by a comma
+    # Create csvreader variable, including the .csv file separated by a comma
     csvreader = csv.reader(election_file, delimiter=',')
 
     # Find and save the header
     header = next(csvreader)
 
-    # Make sure python knows that csvreader is a list
+    # Make sure the csvreader object is cast as a list
     csvlist = list(csvreader)
 
-    #Start a for loop to find all the candidates, this percentage of votes and total votes
+    # Start a for loop to find all the candidates, their percentage of votes and total votes
     for row in csvlist:
 
         # +1 to the total_votes tally
@@ -42,7 +42,7 @@ with open(csvpath) as election_file:
         # Save the the name of the candidate (value in column 2)
         candidate = row[2]
 
-        # If candidate is not already in the name list then...
+        # If candidate is not already in the names list then...
         if candidate not in names:
 
             #... add candidate to the name list
@@ -62,7 +62,7 @@ with open(csvpath) as election_file:
 
 # Print total votes to the terminal
 print(f"Total votes: {total_votes}")
-print("--------------------------------------------------------------")
+print("------------------------------------------------------")
 
 # Use each candidate's name to look through the candidate_votes dictionary
 for candidate in candidates_tally:
@@ -81,7 +81,7 @@ for candidate in candidates_tally:
         print(f"{candidate}: {round_percentage}% ({votes})")
 
 # Print a dividing line
-print("----------------------------------------------------------------")
+print("------------------------------------------------------")
 
 # Find the winner
 # Got help from stackoverflow (1) to find this method
@@ -92,7 +92,7 @@ winner = max(candidates_tally, key=candidates_tally.get)
 print(f"Winner: {winner}")
 
 # Print a dividing line
-print("----------------------------------------------------------------")
+print("------------------------------------------------------")
 
 # Create a file in the analysis folder of PyPoll
 election_results = os.path.join(current_dir, 'PyPoll', 'analysis', 'election_results.txt')
