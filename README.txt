@@ -12,6 +12,8 @@ python-challenge contents:
 
 python-challenge notes:
     - analysis text files are in respective analysis folders
+    - depended on Xpert Learning Assistant heavily:
+        - some code may closely resemble potential answers from XLA
 
 sources include:
  - Xpert Learning Assistant
