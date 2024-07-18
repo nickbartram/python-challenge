@@ -7,9 +7,8 @@ python-challenge contents:
     - PyBank/PyPoll folders
     - PyBank/PyPoll sub-folders: analysis, Resources
     - PyBank/PyPoll main.py files
-    - PyBank > Resources > budget_data.csv file
-    - PyPoll > Resources > election_data.csv file
-    - text files: election_results.txt, financial_analysis.txt
+    - Resources > budget_data.csv, election_data.csv 
+    - analysis > election_results.txt, financial_analysis.txt
     - this README
 
 python-challenge notes:
