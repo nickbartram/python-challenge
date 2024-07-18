@@ -64,13 +64,13 @@ with open(csvpath) as election_file:
 print(f"Total votes: {total_votes}")
 print("--------------------------------------------------------------")
 
-# Use the candidate name to look through the candidate_votes dictionary
+# Use each candidate's name to look through the candidate_votes dictionary
 for candidate in candidates_tally:
         
-        # Save the number of votes the candidate received toa variable
+        # Save the number of votes the candidate received to a variable
         votes = candidates_tally[candidate]
 
-        # Divide the candidates votes by the total votes and multiply by 100,
+        # Divide each candidate's votes by the total votes and multiply by 100,
         # Save this percentage to a variable
         percentage = (votes / total_votes) * 100
 

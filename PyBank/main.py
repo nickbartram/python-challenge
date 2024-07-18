@@ -29,55 +29,55 @@ with open(csvpath) as budget_file:
     csv_list = list(csvreader)
 
     # Loop through every row of the csv_list
-    for row in csv_list:
+    for month in csv_list:
+
+        # Save the value in column 0 ("Date") to a list: 'date'
+        date.append(month[0])
 
         # Add its column 1 value ('Profit/Losses') to the total_sum counter
-        total_sum += int(row[1])
+        total_sum += int(month[1])
+
+        # Save the value in column 1 ("Profit/Losses") to a list: 'profit_loss' 
+        profit_loss.append(int(month[1]))
 
         # +1 to total months counter
         total_months += 1
 
-        # Save the value in column 1 ("Profit/Losses") to a list: 'profit_loss' 
-        profit_loss.append(int(row[1]))
+# For every row in profit_loss list except the last...
+for i in range(len(profit_loss)-1):
 
-        # Save the value in column 0 ("Date") to a list: 'date'
-        date.append(row[0])
-    
-# Save changes in Profit/Losses between every two rows in a variable:
-# Subtract this rows profit_loss value from the next one's,
-# Do it for every row except the last, to avoid comparing to a blank space
-changes_profit_loss = [profit_loss[i+1] - profit_loss[i] for i in range(len(profit_loss)-1)]
+    # Subtract the current row's value from the next one to get the difference or change
+    profit_loss_difference = [profit_loss[i + 1] - profit_loss[i]]
 
-# Get the average change by dividing the sum of all the changes, by the number of them
-average_change = sum(changes_profit_loss) / len(changes_profit_loss)
-
+# Get the average change by dividing the sum of all the differences, by the number of them
+difference_avg = sum(profit_loss_difference) / len(profit_loss_difference)
 # Round the average to 2 decimal places
-round_average_change = round(average_change, 2)
+round_difference_avg = round(difference_avg, 2)
 
 # Save to a variable the greatest increase and decrease in 'Profit/Losses'
-# Find the maximum and minimum values of changes_profit_loss
-max_increase = max(changes_profit_loss)
-max_decrease = min(changes_profit_loss)
+# Find the maximum and minimum values of profit_loss_difference
+greatest_increase = max(profit_loss_difference)
+greatest_decrease = min(profit_loss_difference)
 
-# Find the date of the change by adding 1 to the max_increase
-# Add one because of logic of changes list comprehension
-max_date = date[changes_profit_loss.index(max_increase) + 1]
-min_date = date[changes_profit_loss.index(max_decrease) + 1]
+# Find the date of the change by adding 1 to the greatest_increase
+# Add one because of logic of for loop above (it looks at the next row to find the difference)
+# XLA helped greatly with this logic
+max_date = date[profit_loss_difference.index(greatest_increase) + 1]
+min_date = date[profit_loss_difference.index(greatest_decrease) + 1]
 
 # Print the financial analysis results starting with the title
 print("Financial Analysis")
-
 # Print a dividing line
 print("--------------------------------------------------")
 
 # Print total months,sum, and average change
 print(f"Total Months: {total_months}")
 print(f"Total: ${total_sum}")
-print(f"Average Change: ${round_average_change}")
+print(f"Average Change: ${round_difference_avg}")
 
 # Print greatest increase and decrease and their dates
-print(f"Greatest Increase in Profits: {max_date} (${max_increase})")
-print(f"Greatest Decrease in Profits: {min_date} (${max_decrease})")
+print(f"Greatest Increase in Profits: {max_date} (${greatest_increase})")
+print(f"Greatest Decrease in Profits: {min_date} (${greatest_decrease})")
 
 # Create a file in the analysis folder of PyBank
 fin_analysis = os.path.join(current_dir, 'PyBank', 'analysis', 'financial_analysis.txt')
@@ -93,9 +93,9 @@ with open(fin_analysis, 'w') as results:
     # Write total months, total, average change, greatest increase and decrease 
     results.write(f"Total Months: {total_months}\n")
     results.write(f"Total: {total_sum}\n")
-    results.write(f"Average Change: {round_average_change}\n")
-    results.write(f"Greatest Increase in Profits: {max_date} (${max_increase})\n")
-    results.write(f"Greatest Decrease in Profits: {min_date} (${max_decrease})\n")
+    results.write(f"Average Change: {round_difference_avg}\n")
+    results.write(f"Greatest Increase in Profits: {max_date} (${greatest_increase})\n")
+    results.write(f"Greatest Decrease in Profits: {min_date} (${greatest_decrease})\n")
 
 
 

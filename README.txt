@@ -11,11 +11,10 @@ python-challenge contents:
     - this README
 
 python-challenge notes:
-    - analysis text files are in main python-challenge folder
-    - PyBank/PyPoll 'analysis' folders are empty
+    - analysis text files are in respective analysis folders
 
 sources include:
  - Xpert Learning Assistant
     - marked in comments of main.py files
  - stackoverflow:
-    - https://stackoverflow.com/questions/52205011/how-to-get-max-to-return-variable-names-instead-of-values-in-python
+    (1) https://stackoverflow.com/questions/52205011/how-to-get-max-to-return-variable-names-instead-of-values-in-python
