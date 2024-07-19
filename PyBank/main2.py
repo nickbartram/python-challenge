@@ -2,17 +2,18 @@
 import os
 import csv
 
-# Get os to find the current directory
-current_dir = os.getcwd()
+# Get os to find the current directory using the (__file__) attribute
+# Xpert Learning Assistant helped with this code, and it's proved the most reliable
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Join the path to the .csv file
-csvpath = os.path.join(current_dir, 'PyBank', 'Resources', 'budget_data.csv')
+# Join the path to the .csv file, save to csvpath variable
+csvpath = os.path.join(current_dir, 'Resources', 'budget_data.csv')
 
 # Create months and sums counters
 total_months = 0
 total_sum = 0
 
-# Create profit/loss and date lists
+# Create profit/loss, date, and profit_loss_difference lists
 profit_loss = []
 date = []
 profit_loss_difference = []
@@ -20,13 +21,13 @@ profit_loss_difference = []
 # Open the .csv file as a new variable 'budget file'
 with open(csvpath) as budget_file:
 
-    # Use csv module to read and seperate elements of the file
+    # Use csv module to read and separate elements of the file
     csvreader = csv.reader(budget_file, delimiter=',')
 
     # Find and save the header
     header = next(csvreader)
 
-    # Convert csvreader into a list, troubleshooted online and XLA
+    # Convert csvreader into a list
     csv_list = list(csvreader)
 
     # Loop through every row of the csv_list
@@ -72,7 +73,7 @@ min_date = date[profit_loss_difference.index(greatest_decrease) + 1]
 # Print the financial analysis results starting with the title
 print("Financial Analysis")
 # Print a dividing line
-print("--------------------------------------------------")
+print("----------------------------")
 
 # Print total months,sum, and average change
 print(f"Total Months: {total_months}")
@@ -84,7 +85,7 @@ print(f"Greatest Increase in Profits: {max_date} (${greatest_increase})")
 print(f"Greatest Decrease in Profits: {min_date} (${greatest_decrease})")
 
 # Create a file in the analysis folder of PyBank
-fin_analysis = os.path.join(current_dir, 'PyBank', 'analysis', 'financial_analysis.txt')
+fin_analysis = os.path.join(current_dir, 'analysis', 'financial_analysis.txt')
 
 # Export results to a text file
 # Open a new file to write in and save it to 'results'
@@ -92,7 +93,7 @@ with open(fin_analysis, 'w') as results:
 
     # Start writing, starting with the title and then moving to next line
     results.write(f"Financial Analysis\n")
-    results.write("-------------------------------------------------\n")
+    results.write("----------------------------\n")
     
     # Write total months, total, average change, greatest increase and decrease 
     results.write(f"Total Months: {total_months}\n")
