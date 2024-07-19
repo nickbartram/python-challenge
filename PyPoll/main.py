@@ -20,7 +20,7 @@ names = []
 
 # Print the title of the results that will display in terminal
 print("Election Results")
-print("-------------------------------------------------------------")
+print("-------------------------")
 
 # Open the .csv file and save it to a variable
 with open(csvpath) as election_file:
